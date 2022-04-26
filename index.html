@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles/style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins:wght@400&family=Ubuntu:wght@300&display=swap"
+			rel="stylesheet"
+		/>
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		<title>e-commerce</title>
+	</head>
+	<body>
+		<!-- nav -->
+		<nav>
+			<h1>Consul Limited</h1>
+			<div class="cart-btn">
+				<span class="nav-icon">
+					<ion-icon name="cart-sharp"></ion-icon>
+				</span>
+				<div class="cart-items">0</div>
+			</div>
+		</nav>
+
+		<main>
+			<!-- filters -->
+			<div class="filters">
+				<select class="dropdown-filters" name="filters">
+					<option class="all-option" value="all" selected>All</option>
+					<option class="option" value="laptops">Laptops</option>
+					<option class="option" value="smartphones">Smartphones</option>
+					<option class="option" value="under-500">Under £500</option>
+				</select>
+
+				<div class="all">All</div>
+				<div class="filter">Laptops</div>
+				<div class="filter">Smartphones</div>
+				<div class="filter">Under £500</div>
+			</div>
+
+			<!--products-->
+			<div class="products"></div>
+
+			<!--cart-->
+			<div class="cart-overlay"></div>
+			<div class="cart">
+				<span class="close-cart">
+					<ion-icon name="close-circle-sharp"></ion-icon>
+				</span>
+				<h2>Your Cart</h2>
+				<div class="cart-content"></div>
+				<div class="cart-footer">
+					<h3>Your Total: £ <span class="cart-total">0</span></h3>
+					<button class="clear-cart banner-btn">Clear Cart</button>
+				</div>
+			</div>
+		</main>
+
+		<!--contentful-->
+		<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+
+		<script src="script.js"></script>
+	</body>
+</html>
