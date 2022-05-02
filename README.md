@@ -1,1 +1,1 @@
-# shopping-cart-system
+This project is a shopping cart system for use in an e-commerce store. It has a selection of products, fetched from Contentful CMS, that can be added to the cart, in which you can alter their quantity, remove them, or clear the cart in its entirety. Additionally, there is a filter system for different categorisations of items, as well as unique descriptions for each item which can be accessed with the corresponding button. Cart values will be preserved if the page is closed or refreshed.
