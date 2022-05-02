@@ -1,7 +1,10 @@
+// connection to Contentful (real values are redacted)
 const client = contentful.createClient({
 	space: "redacted key",
 	accessToken: "redacted key"
 })
+
+// set up all the necessary variables
 
 const cartBtn = document.querySelector(".cart-btn")
 const closeCartBtn = document.querySelector(".close-cart")
@@ -25,6 +28,7 @@ let tracker
 let products
 
 class Products {
+	// static method that gets the products from Contentful and destructures each item into usable product objects
 	static async getProducts() {
 		try {
 			let contentful = await client.getEntries({
@@ -45,6 +49,7 @@ class Products {
 }
 
 class UI {
+	// static method that displays the products to the html page
 	static displayProducts(products) {
 		let result = ""
 		products.forEach(product => {
@@ -69,6 +74,7 @@ class UI {
 		productsDOM.innerHTML = result
 	}
 
+	// method that filters products by category
 	filter() {
 		const filter = document.querySelectorAll(".filter")
 		const option = document.querySelectorAll(".option")
@@ -104,7 +110,6 @@ class UI {
 				filter[i].classList.toggle("active")
 				if (options) filter[i].classList.add("active")
 				conditions = ["laptop", "phone"]
-				// allProducts.forEach(product => product.style.display = "block"); why the added parenthesis?
 				allProducts.forEach(product => (product.style.display = "block"))
 
 				if (!tracker[i].active || options) {
@@ -134,6 +139,7 @@ class UI {
 }
 
 class Cart {
+	// method that gets the cart buttons and adds event listeners to each; inside the event listener many functions run
 	getCartButtons() {
 		const buttons = [...document.querySelectorAll(".cart-add-btn")]
 		buttonsDOM = buttons
@@ -156,6 +162,7 @@ class Cart {
 			})
 		})
 	}
+	// method that gets the expand buttons and adds event listeners to each
 	getProductButtons() {
 		const expandBtn = document.querySelectorAll(".expand-btn")
 		expandBtn.forEach(button => {
@@ -175,6 +182,7 @@ class Cart {
 			})
 		})
 	}
+	// method that sets the cart values/subtotal
 	setCartValues(cart) {
 		let tempTotal = 0
 		let itemsTotal = 0
@@ -185,6 +193,7 @@ class Cart {
 		cartTotal.innerText = parseFloat(tempTotal.toFixed(2))
 		cartItems.innerText = itemsTotal
 	}
+	// method that generates the item clicked on to the cart html
 	addCartItem(item) {
 		const div = document.createElement("div")
 		div.classList.add("cart-item")
@@ -203,10 +212,12 @@ class Cart {
         `
 		cartContent.appendChild(div)
 	}
+	// method that shows the cart when clicked
 	showCart() {
 		cartOverlay.classList.add("transparent-background")
 		cartDOM.classList.add("showCart")
 	}
+	// method that gets all the values and display each time the page is loaded
 	setupAPP() {
 		cart = Storage.getCart()
 		this.setCartValues(cart)
@@ -215,13 +226,16 @@ class Cart {
 		closeCartBtn.addEventListener("click", this.hideCart)
 		cartOverlay.addEventListener("click", this.hideCart)
 	}
+	// method that adds each item that is in the cart localStorage to the cart html
 	populateCart(cart) {
 		cart.forEach(item => this.addCartItem(item))
 	}
+	// method that hides the cart when clicked
 	hideCart() {
 		cartOverlay.classList.remove("transparent-background")
 		cartDOM.classList.remove("showCart")
 	}
+	// method that contains all the cart logic. removing, increasing and decreasing using event bubbling
 	cartLogic() {
 		clearCartBtn.addEventListener("click", () => {
 			this.clearCart()
@@ -256,12 +270,14 @@ class Cart {
 			}
 		})
 	}
+	// method that clears the cart of all items
 	clearCart() {
 		let cartItems = cart.map(item => item.id)
 		cartItems.forEach(id => this.removeItem(id))
 		while (cartContent.children.length > 0) cartContent.removeChild(cartContent.children[0])
 		this.hideCart()
 	}
+	// method that removes an item
 	removeItem(id) {
 		cart = cart.filter(item => item.id !== id)
 		this.setCartValues(cart)
@@ -276,21 +292,26 @@ class Cart {
 }
 
 class Storage {
+	// static method that saves the products
 	static saveProducts(products) {
 		localStorage.setItem("products", JSON.stringify(products))
 	}
+	// static method that gets the products
 	static getProducts(id) {
 		let products = JSON.parse(localStorage.getItem("products"))
 		return products.find(product => product.id === id)
 	}
+	// static method that saves the cart
 	static saveCart(cart) {
 		localStorage.setItem("cart", JSON.stringify(cart))
 	}
+	// static method that gets the cart
 	static getCart() {
 		return localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
 	}
 }
 
+// initial app setup
 document.addEventListener("DOMContentLoaded", () => {
 	const ui = new UI()
 	const products = new Products()
