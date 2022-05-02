@@ -73,7 +73,6 @@ class UI {
 		})
 		productsDOM.innerHTML = result
 	}
-
 	// method that filters products by category
 	filter() {
 		const filter = document.querySelectorAll(".filter")
@@ -111,7 +110,6 @@ class UI {
 				if (options) filter[i].classList.add("active")
 				conditions = ["laptop", "phone"]
 				allProducts.forEach(product => (product.style.display = "block"))
-
 				if (!tracker[i].active || options) {
 					if (i === 2) {
 						price.forEach((price, x) => {
